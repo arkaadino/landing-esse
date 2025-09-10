@@ -1,9 +1,8 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { Coffee, Instagram, MessageCircle, ShoppingBag } from 'lucide-react';
+import { Coffee, Instagram, MessageCircle, ShoppingBag, Bike, Handbag } from 'lucide-react';
 import { Header } from './components/sections/Header';
-import { CoffeeMarquee } from './components/sections/CoffeeMarquee';
 import { LinksSection } from './components/sections/LinksSection';
 import MapLocation from './components/sections/MapLocation';
 import { Footer } from './components/sections/Footer';
@@ -31,33 +30,47 @@ export default function HomePage() {
 
   const links = [
     {
-      title: "Pesan Kopi Sekarang",
+      title: "Food & Beverages",
       subtitle: "Menu lengkap & delivery tersedia",
       icon: <Coffee className="w-5 h-5" />,
-      url: "#order",
+      url: "pdf/Menu.pdf",
+      variant: "cream" as const, // Krem untuk menu
     },
     {
       title: "Instagram",
       subtitle: "@essential.kopi",
       icon: <Instagram className="w-5 h-5" />,
-      url: "https://instagram.com/hqessentialkopi",
+      url: "https://instagram.com/essential.kopi",
+      variant: "gradient" as const, // Gradient purple-pink untuk Instagram
     },
     {
-      title: "WhatsApp Order",
+      title: "Meeting Room Reservation",
       subtitle: "Chat langsung untuk pemesanan",
       icon: <MessageCircle className="w-5 h-5" />,
       url: "https://wa.me/085559626858",
+      variant: "meeting" as const, // Biru professional untuk meeting room
     },
     {
-      title: "Toko Online",
-      subtitle: "Belanja kopi premium",
+      title: "GrabFood",
+      subtitle: "Pesan produk kami secara online",
       icon: <ShoppingBag className="w-5 h-5" />,
-      url: "#shop",
+      url: "https://r.grab.com/g/6-20250910_112438_4043f70c978242ba8e74b9def3d6f5c4_MEXMPS-6-C66DVK6ATNMJUA",
+      variant: "grabfood" as const, // Hijau fresh untuk GrabFood
+    },
+    {
+      title: "Gojek",
+      subtitle: "Pesan produk kami secara online",
+      icon: <Bike className="w-5 h-5" />,
+      url: "https://gofood.link/a/PpkiFJG",
+      variant: "gojek" as const, // Hijau bold untuk Gojek
+    },
+    {
+      title: "ShopeeFood",
+      subtitle: "Pesan produk kami secara online",
+      icon: <Handbag className="w-5 h-5" />,
+      url: "https://shopee.co.id/universal-link/now-food/shop/22028254?deep_and_deferred=1&shareChannel=copy_link",
+      variant: "shopeefood" as const, // Orange-red untuk ShopeeFood
     }
-  ];
-
-  const coffeeSpecialties = [
-    "Single Origin", "House Blend", "Cold Brew", "Espresso", "Pour Over", "French Press"
   ];
 
   if (!isLoaded) {
@@ -83,7 +96,6 @@ export default function HomePage() {
       />
       
       <Header currentTime={currentTime} />
-      <CoffeeMarquee specialties={coffeeSpecialties} />
       <LinksSection 
         links={links} 
         hoveredCard={hoveredCard} 

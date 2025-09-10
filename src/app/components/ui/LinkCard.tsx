@@ -1,3 +1,4 @@
+// LinkCard.tsx
 import React from 'react';
 
 interface LinkData {
@@ -5,6 +6,7 @@ interface LinkData {
   subtitle: string;
   icon: React.ReactNode;
   url: string;
+  variant?: 'cream' | 'gradient' | 'grabfood' | 'gojek' | 'shopeefood' | 'meeting';
 }
 
 interface LinkCardProps {
@@ -18,22 +20,24 @@ export const LinkCard: React.FC<LinkCardProps> = ({
   link, 
   index, 
   isHovered, 
-  onHover 
+  onHover
 }) => {
   const handleClick = () => {
     if (link.url.startsWith('#')) {
-      // Internal anchor
       document.querySelector(link.url)?.scrollIntoView({ behavior: 'smooth' });
+    } else if (link.url.endsWith('.pdf')) {
+      window.open(link.url, '_blank');
     } else {
-      // External link
       window.open(link.url, '_blank', 'noopener,noreferrer');
     }
   };
 
+  const variant = link.variant || 'cream';
+
   return (
     <article
-      className={`group glass-card cursor-pointer transition-all duration-500 hover:scale-[1.02] ${
-        isHovered ? 'glass-card-hover' : ''
+      className={`group cursor-pointer transition-all duration-500 hover:scale-[1.02] rounded-xl link-card-${variant} ${
+        isHovered ? 'scale-[1.02] shadow-xl' : ''
       }`}
       onMouseEnter={() => onHover(index)}
       onMouseLeave={() => onHover(null)}
@@ -49,23 +53,52 @@ export const LinkCard: React.FC<LinkCardProps> = ({
       aria-label={`${link.title}: ${link.subtitle}`}
     >
       <div className="p-5 flex items-center space-x-4">
-        <div className="flex-shrink-0 w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-100 to-stone-200 flex items-center justify-center text-stone-700 group-hover:scale-110 transition-transform duration-300 glass-icon">
+        <div className="icon flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300">
           {link.icon}
         </div>
         
         <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-stone-800 text-base mb-0.5 group-hover:text-amber-800 transition-colors duration-300">
+          <h3 className="title font-medium text-base mb-0.5 transition-colors duration-300">
             {link.title}
           </h3>
-          <p className="text-stone-500 text-sm font-light">
+          <p className="subtitle text-sm font-light">
             {link.subtitle}
           </p>
         </div>
         
         <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-          <div className="w-1.5 h-1.5 bg-amber-600 rounded-full"></div>
+          <div className="dot w-1.5 h-1.5 rounded-full"></div>
         </div>
       </div>
     </article>
+  );
+};
+
+// LinksSection.tsx
+interface LinksSectionProps {
+  links: LinkData[];
+  hoveredCard: number | null;
+  setHoveredCard: (index: number | null) => void;
+}
+
+export const LinksSection: React.FC<LinksSectionProps> = ({
+  links,
+  hoveredCard,
+  setHoveredCard
+}) => {
+  return (
+    <section id="links" className="py-12 px-6">
+      <div className="max-w-2xl mx-auto space-y-4">
+        {links.map((link, index) => (
+          <LinkCard
+            key={index}
+            link={link}
+            index={index}
+            isHovered={hoveredCard === index}
+            onHover={setHoveredCard}
+          />
+        ))}
+      </div>
+    </section>
   );
 };

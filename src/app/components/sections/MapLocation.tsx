@@ -50,7 +50,6 @@ export default function MapLocation() {
       <div className="glass-card overflow-hidden">
         <header className="p-4 border-b border-white/20">
           <h2 className="font-medium text-stone-800 flex items-center gap-2 text-base">
-            <Coffee className="w-4 h-4 text-amber-700" />
             Lokasi Kami
           </h2>
           <p className="text-sm text-stone-500 font-light mt-1">Kunjungi Kami!</p>
